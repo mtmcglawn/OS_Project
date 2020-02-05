@@ -1,8 +1,9 @@
 #include <stdio.h> 
 #include <stdbool.h>
 
-static int SECTOR_SIZE = 3200;
-static int FILE_SIZE = 64000;
+static int SECTOR_SIZE = 3200; //In bytes
+static int FILE_SIZE = 64000; //In bytes
+
 
 
 //Erase All Sectors (sets all bits in simlates memory to value 1)
@@ -16,10 +17,26 @@ bool EraseAllSectors() {
 	}
 }
 
+
+
 //Given a Sect from 0-19 toggle all bits in that sector to 1
 bool EraseSector(int Sect) {
-	int position=SECTOR_SIZE%8;
-	int mask=1<<position;
+	FILE *fptr;
+
+
+	//Program exits if the file pointer returns NULL.
+	fopen(&fptr, "memory.bin","wb");
+	if(fptr == NULL){
+		printf("Unable to open file!");
+		return 1;
+	}
+
+	fwrite();
+
+
+	fclose(fptr);
+
+
 
 	return ;
 }
