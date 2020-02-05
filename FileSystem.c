@@ -1,6 +1,10 @@
 #include <stdio.h> 
 #include <stdbool.h>
 
+static int SECTOR_SIZE = 3200;
+static int FILE_SIZE = 64000;
+
+
 //Erase All Sectors (sets all bits in simlates memory to value 1)
 // if necessary, creates the file simulating the medium
 bool EraseAllSectors() {
@@ -12,15 +16,12 @@ bool EraseAllSectors() {
 	}
 }
 
-int toggle_bit() {
-	//Toggle a set number of bits
-	int element=block/8;
-	int position=block%8;
+//Given a Sect from 0-19 toggle all bits in that sector to 1
+bool EraseSector(int Sect) {
+	int position=SECTOR_SIZE%8;
 	int mask=1<<position;
 
-	bitmap[element]^=mask;
-
-	return bitmap[element]&mask;
+	return ;
 }
 
 
