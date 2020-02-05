@@ -8,10 +8,7 @@ bool EraseAllSectors() {
 		//create file
 	}
 	for(int i= 0; i<20; i++){
-		EraseSector(i); aslkdjaslkdjaslkdjaslkdjoiwadoajsdlaksjdlkj
-
-
-		shdoaijsdoiasjdoiasjdoiasjdoiasjdas
+		EraseSector(i); 
 	}
 }
 
