@@ -6,6 +6,14 @@ static int FILE_SIZE = 64000; //In bytes
 
 
 
+struct word {
+	char byte1;
+	char byte2;
+}
+
+
+
+
 //Erase All Sectors (sets all bits in simlates memory to value 1)
 // if necessary, creates the file simulating the medium
 bool EraseAllSectors() {
@@ -19,10 +27,11 @@ bool EraseAllSectors() {
 
 
 
+
 //Given a Sect from 0-19 toggle all bits in that sector to 1
 bool EraseSector(int Sect) {
 	FILE *fptr;
-
+	struct word allOnes = {0xFF, 0xFF};
 
 	//Program exits if the file pointer returns NULL.
 	fopen(&fptr, "memory.bin","wb");
@@ -31,14 +40,14 @@ bool EraseSector(int Sect) {
 		return 1;
 	}
 
-	fwrite();
-
-
+	//Moves file pointer to selected sector
+	fseek(fptr, (Sect * SECTOR_SIZE), SEEK_SET);
+	//Wites the word allOnes to each word in the sector filling it with 1s.
+	fwrite(&allOnes, sizeof(allOnes), 1600, fptr);
+	//Closes file
 	fclose(fptr);
 
-
-
-	return ;
+	return 0;
 }
 
 
