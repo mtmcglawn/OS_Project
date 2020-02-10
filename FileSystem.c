@@ -33,7 +33,7 @@ void ReadWord (int nAddress) {
 		return;
 	}
 	fseek(fptr, nAddress, SEEK_SET);
-	fgets(str, 16, fptr);
+	fgets(str, 17, fptr);
 	printf("Word located at index %d", nAddress);
 	printf(" is: ");
 	puts(str);
