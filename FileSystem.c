@@ -13,29 +13,28 @@ FILE *fptr;
 }*/
 
 //Read Word: Reads a WORD (2 bytes) from specific address
-void ReadWord (int nAddress) {
-	char result[2];
+char * ReadWord (int nAddress) {
+	static char word[2];
 	//checks that address is on boundary
 	if ((nAddress % 2) != 0) {
 		printf("Address must be on WORD boundary.(i.e. even index)");
-		return;
+		return word;
 	}
 	//makes sure file can be opened
 	fptr = fopen("memory.bin","rb");
 	if (fptr == NULL) {
 		printf("Unable to open file.");
-		return;
+		return word;
 	}
 	fseek(fptr, 0, SEEK_END);
 	long int size = ftell(fptr);
 	if (size < nAddress) {
 		printf("Address must be less than file size.");
-		return;
+		return word;
 	}
 	fseek(fptr, nAddress, SEEK_SET);
-	fgets(result, 3, fptr);
-	printf("Word located at index %d", nAddress);
-	printf(" is: %s", result);
+	fgets(word, 3, fptr);
+	return word;
 
 }
 //Write Word: Writes a WORD (2bytes) to specific address
@@ -44,6 +43,5 @@ void WriteWord (int nAddress, int nWord) {
 }
 
 int main(){ 
-ReadWord(4); 
 return 0;   
 }  
