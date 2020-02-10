@@ -12,7 +12,6 @@ FILE *fptr;
 	return 1;
 }*/
 
-
 //Read Word: Reads a WORD (2 bytes) from specific address
 void ReadWord (int nAddress) {
 	char str[16];
@@ -22,7 +21,7 @@ void ReadWord (int nAddress) {
 		return;
 	}
 	//makes sure file can be opened
-	fptr = fopen("memory.bin","wb");
+	fptr = fopen("memory.bin","rb");
 	if (fptr == NULL) {
 		printf("Unable to open file.");
 		return;
@@ -33,14 +32,11 @@ void ReadWord (int nAddress) {
 		printf("Address must be less than file size.");
 		return;
 	}
-	fseek(fptr, 0, SEEK_SET);
 	fseek(fptr, nAddress, SEEK_SET);
 	fgets(str, 16, fptr);
 	printf("Word located at index %d", nAddress);
 	printf(" is: ");
 	puts(str);
-
-
 }
 //Write Word: Writes a WORD (2bytes) to specific address
 void WriteWord (int nAddress, int nWord) {
