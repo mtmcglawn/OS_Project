@@ -14,7 +14,7 @@ FILE *fptr;
 
 //Read Word: Reads a WORD (2 bytes) from specific address
 void ReadWord (int nAddress) {
-	char str[16];
+	char result[2];
 	//checks that address is on boundary
 	if ((nAddress % 2) != 0) {
 		printf("Address must be on WORD boundary.(i.e. even index)");
@@ -33,10 +33,10 @@ void ReadWord (int nAddress) {
 		return;
 	}
 	fseek(fptr, nAddress, SEEK_SET);
-	fgets(str, 17, fptr);
+	fgets(result, 3, fptr);
 	printf("Word located at index %d", nAddress);
-	printf(" is: ");
-	puts(str);
+	printf(" is: %s", result);
+
 }
 //Write Word: Writes a WORD (2bytes) to specific address
 void WriteWord (int nAddress, int nWord) {
