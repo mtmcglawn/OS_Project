@@ -76,6 +76,6 @@ bool EraseSector(int Sect) {
 }
 
 int main(){ 
-EraseAllSectors();      
-return 0;   
+	EraseAllSectors();      
+	return 0;   
 }  
