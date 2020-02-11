@@ -8,7 +8,7 @@ static int FILE_SIZE = 64000; //In bytes
 struct word {
 	char byte1;
 	char byte2;
-}
+};
 
 
 //Erase All Sectors sets all bits in simlates memory to value 1
@@ -17,9 +17,10 @@ struct word {
 bool EraseAllSectors() {
 	fptr = fopen("memory.bin","wb+");
 	for(int i= 0; i<20; i++){
-		EraseSector(i); 
+		i++;//EraseSector(i); 
 	}
 	return 1;
+}
 
 //Read Word: Reads a WORD (2 bytes) from specific address
 char * ReadWord (int nAddress) {
@@ -48,7 +49,7 @@ char * ReadWord (int nAddress) {
 }
 
 //Write Word: Writes a WORD (2bytes) to spefic address
-WriteWord (nAddress, nWord) {
+void WriteWord (int nAddress, struct word nWord) {
 	
 }
 
@@ -58,7 +59,7 @@ bool EraseSector(int Sect) {
 	struct word allOnes = {0xFF, 0xFF};
 
 	//Program exits if the file pointer returns NULL.
-	fopen(&fptr, "memory.bin","wb");
+	fptr = fopen("memory.bin","wb");
 	if(fptr == NULL){
 		printf("Unable to open file!");
 		return 1;
