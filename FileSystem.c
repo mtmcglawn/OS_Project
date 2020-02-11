@@ -1,5 +1,6 @@
 #include <stdio.h> 
 #include <stdbool.h>
+FILE *fptr;
 
 static int SECTOR_SIZE = 3200; //In bytes
 static int FILE_SIZE = 64000; //In bytes
@@ -17,16 +18,21 @@ struct word {
 //Erase All Sectors (sets all bits in simlates memory to value 1)
 // if necessary, creates the file simulating the medium
 bool EraseAllSectors() {
-	if () { //if file does not 
-		//create file
-	}
+	fptr = fopen("memory.bin","wb+");
 	for(int i= 0; i<20; i++){
-		EraseSector(i);
+		EraseSector(i); 
 	}
+	return 1;
 }
 
+//Read Word: Reads a word (2 bytes) from specific address
+ReadWord (nAddress) {
 
-
+}
+//Write Word: Writes a WORD (2bytes) to spefic address
+WriteWord (nAddress, nWord) {
+	
+}
 
 //Given a Sect from 0-19 toggle all bits in that sector to 1
 bool EraseSector(int Sect) {
@@ -50,7 +56,7 @@ bool EraseSector(int Sect) {
 	return 0;
 }
 
-
-int main(){       
+int main(){ 
+EraseAllSectors();      
 return 0;   
 }  
