@@ -2,14 +2,18 @@
 #include <stdbool.h>
 FILE *fptr;
 
-static int SECTOR_SIZE = 3200; //In bytes
-static int FILE_SIZE = 64000; //In bytes
+static int SECTOR_SIZE = 32000; //In bytes
+static int FILE_SIZE = 640000; //In bytes
 
 struct word {
 	char byte1;
 	char byte2;
 };
 
+bool EraseAllSectors();
+char* ReadWord(int nAddress);
+void WriteWord(int nAddress, struct word nWord);
+bool EraseSector(int Sect);
 
 //Erase All Sectors sets all bits in simlates memory to value 1
 // if necessary, creates the file simulating the medium
@@ -17,13 +21,13 @@ struct word {
 bool EraseAllSectors() {
 	fptr = fopen("memory.bin","wb+");
 	for(int i= 0; i<20; i++){
-		i++;//EraseSector(i); 
+		EraseSector(i); 
 	}
 	return 1;
 }
 
 //Read Word: Reads a WORD (2 bytes) from specific address
-char * ReadWord (int nAddress) {
+char* ReadWord (int nAddress) {
 	static char word[2];
 	//checks that address is on boundary
 	if ((nAddress % 2) != 0) {
@@ -68,7 +72,7 @@ bool EraseSector(int Sect) {
 	//Moves file pointer to selected sector
 	fseek(fptr, (Sect * SECTOR_SIZE), SEEK_SET);
 	//Wites the word allOnes to each word in the sector filling it with 1s.
-	fwrite(&allOnes, sizeof(allOnes), 1600, fptr);
+	fwrite(&allOnes, sizeof(allOnes), (SECTOR_SIZE / 2), fptr);
 	//Closes file
 	fclose(fptr);
 
