@@ -43,8 +43,8 @@ struct word ReadWord (int nAddress) {
 	}
 	//calculates size of file 
 	long int size = SECTOR_SIZE * FILE_SIZE;
-	if (size < nAddress) {
-		printf("Address must be less than file size.");
+	if ((size < nAddress) || nAddress < 0)  {
+		printf("Address out of file size bounds.");
 		return result;
 	}
 	fseek(fptr, nAddress, SEEK_SET);
