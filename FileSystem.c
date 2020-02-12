@@ -11,7 +11,7 @@ struct word {
 };
 
 bool EraseAllSectors();
-char* ReadWord(int nAddress);
+struct word ReadWord(int nAddress);
 void WriteWord(int nAddress, struct word nWord);
 bool EraseSector(int Sect);
 
@@ -27,29 +27,33 @@ bool EraseAllSectors() {
 }
 
 //Read Word: Reads a WORD (2 bytes) from specific address
-char* ReadWord (int nAddress) {
-	static char word[2];
+struct word ReadWord (int nAddress) {
+	struct word result;
+	char storage[2];
 	//checks that address is on boundary
 	if ((nAddress % 2) != 0) {
 		printf("Address must be on WORD boundary.(i.e. even index)");
-		return word;
+		return result;
 	}
 	//makes sure file can be opened
 	fptr = fopen("memory.bin","rb");
 	if (fptr == NULL) {
 		printf("Unable to open file.");
-		return word;
+		return result;
 	}
-	fseek(fptr, 0, SEEK_END);
-	long int size = ftell(fptr);
+	//calculates size of file 
+	long int size = SECTOR_SIZE * FILE_SIZE;
 	if (size < nAddress) {
 		printf("Address must be less than file size.");
-		return word;
+		return result;
 	}
 	fseek(fptr, nAddress, SEEK_SET);
-	fgets(word, 3, fptr);
-	return word;
-
+	fgets(storage, 3, fptr);
+	fclose(fptr);
+	//puts specified bytes into word structure
+	result.byte1 = storage[0];
+	result.byte2 = storage[1];
+	return result;
 }
 
 //Write Word: Writes a WORD (2bytes) to spefic address
