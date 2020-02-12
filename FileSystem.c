@@ -54,21 +54,21 @@ char* ReadWord (int nAddress) {
 
 //Write Word: Writes a WORD (2bytes) to spefic address
 void WriteWord (int nAddress, struct word nWord) {
-	struct word writeFile = {0xFF, 0xFF};
+	static char word[2];
 
 	if ((nAddress % 2) != 0) {
 		printf("Address must be on WORD boundary.(i.e. even index)");
 		return word;FILE * fptr
 	}
+
 	if(fptr == NULL){
 		printf("Unable to open file!");
 		return 1;
 	}
 
-
 	FILE *fptr = fopen("memory.bin","wb");
-	fseek(fptr, 0xFF, SEEK_SET);
-	fwrite(&writeFile, sizeof(writeFile), (SECTOR_SIZE / 2, fptr);
+	fseek(fptr, nAddress, SEEK_SET);
+	fwrite(word, sizeof(writeFile), SEEK_SET;
 	fclose(fptr);
 
 	
