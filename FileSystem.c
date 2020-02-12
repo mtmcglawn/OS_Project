@@ -68,7 +68,7 @@ void WriteWord (int nAddress, struct word nWord) {
 
 	FILE *fptr = fopen("memory.bin","wb");
 	fseek(fptr, nAddress, SEEK_SET);
-	fwrite(word, sizeof(writeFile), SEEK_SET;
+	fwrite(word, 0, SEEK_SET;
 	fclose(fptr);
 
 	
