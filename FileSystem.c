@@ -2,8 +2,8 @@
 #include <stdbool.h>
 FILE *fptr;
 
-static int SECTOR_SIZE = 32000; //In bytes
-static int FILE_SIZE = 640000; //In bytes
+static int SECTOR_SIZE = 64000; //In bytes
+static int FILE_SIZE = 1280000; //In bytes
 
 struct word {
 	char byte1;
@@ -60,13 +60,12 @@ void WriteWord (int nAddress, struct word nWord) {
 //Given a Sect from 0-19 toggle all bits in that sector to 1
 bool EraseSector(int Sect) {
 	FILE *fptr;
-	struct word allOnes = {0xFF, 0xFF};
+	static struct word allOnes = {0xFF, 0xFF};
 
 	//Program exits if the file pointer returns NULL.
-	fptr = fopen("memory.bin","wb");
+	fptr = fopen("memory.bin","rb+");
 	if(fptr == NULL){
-		printf("Unable to open file!");
-		return 1;
+		EraseAllSectors();
 	}
 
 	//Moves file pointer to selected sector
