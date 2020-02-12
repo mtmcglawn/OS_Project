@@ -71,7 +71,9 @@ bool EraseSector(int Sect) {
 	//Moves file pointer to selected sector
 	fseek(fptr, (Sect * SECTOR_SIZE), SEEK_SET);
 	//Wites the word allOnes to each word in the sector filling it with 1s.
-	fwrite(&allOnes, sizeof(allOnes), (SECTOR_SIZE / 2), fptr);
+	for(int i = 0; i < 32000; i++){
+		fwrite(&allOnes, sizeof(struct word), 1, fptr);
+	}
 	//Closes file
 	fclose(fptr);
 
