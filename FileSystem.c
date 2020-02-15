@@ -57,7 +57,7 @@ struct word ReadWord (long nAddress) {
 }
 
 //Write Word: Writes a WORD (2bytes) to spefic address
-void WriteWord (long nAddress, struct word nWord) {
+struct word WriteWord(long nAddress, struct word nWord){
 	if ((nAddress % 2) != 0) {
 		printf("Address must be on WORD boundary.(i.e. even index)");
 		return nWord;
@@ -65,7 +65,7 @@ void WriteWord (long nAddress, struct word nWord) {
 
 	if (fptr == NULL){
 		printf("Unable to open file!");
-		return 1;
+		return;
 	}
 
 	FILE *fptr = fopen("memory.bin", "wb");
