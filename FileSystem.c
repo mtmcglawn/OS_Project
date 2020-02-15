@@ -106,6 +106,8 @@ bool EraseSector(int Sect) {
 
 int main(){ 
 	struct word test = ReadWord(0);
+	struct word test1 = {0xAA, 0xAA};
+	WriteWord(0, test1);
 	printf("%c\n", test.byte1);
 	return 0;   
 }  
