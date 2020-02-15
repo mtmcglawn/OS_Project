@@ -12,7 +12,7 @@ struct word {
 
 bool EraseAllSectors();
 struct word ReadWord(long nAddress);
-void WriteWord(long nAddress, struct word nWord);
+bool WriteWord(long nAddress, struct word nWord);
 bool EraseSector(int Sect);
 
 //Erase All Sectors sets all bits in simlates memory to value 1
@@ -57,28 +57,29 @@ struct word ReadWord (long nAddress) {
 }
 
 //Write Word: Writes a WORD (2bytes) to spefic address
-struct word WriteWord(long nAddress, struct word nWord){
+bool WriteWord(long nAddress, struct word nWord){
 	if ((nAddress % 2) != 0) {
 		printf("Address must be on WORD boundary.(i.e. even index)");
-		return nWord;
+		return 0;
 	}
 
 	if (fptr == NULL){
 		printf("Unable to open file!");
-		return;
+		return 0;
 	}
 
 	FILE *fptr = fopen("memory.bin", "wb");
-	struct word rWord ReadWord(nAddress);
+	struct word rWord = ReadWord(nAddress);
 
-	char byteOne = rWord.byte1 && nWord.byte1;
-	char byteTwo = rWord.byte2 && nWord.byte2;
+	char byteOne = rWord.byte1 & nWord.byte1;
+	char byteTwo = rWord.byte2 & nWord.byte2;
 
 	struct word finalWord = {byteOne, byteTwo};
 
 	fseek(fptr, nAddress, SEEK_SET);
 	fwrite(&finalWord, sizeof(struct word), 1, fptr);
 	fclose(fptr);
+	return 1;
 }
 
 //Given a Sect from 0-19 toggle all bits in that sector to 1
@@ -104,10 +105,11 @@ bool EraseSector(int Sect) {
 	return 0;
 }
 
-int main(){ 
+int main(){
+	EraseAllSectors();
 	struct word test = ReadWord(0);
-	struct word test1 = {0xAA, 0xAA};
-	WriteWord(0, test1);
-	printf("%c\n", test.byte1);
-	return 0;   
+	struct word test1 = {0xAA, 0xAA};//AA=10101010
+	//WriteWord(0, test1);
+	printf("%c\n", test.byte1); 
+	return 0;
 }  
