@@ -11,8 +11,8 @@ struct word {
 };
 
 bool EraseAllSectors();
-struct word ReadWord(int nAddress);
-void WriteWord(int nAddress, struct word nWord);
+struct word ReadWord(long nAddress);
+void WriteWord(long nAddress, struct word nWord);
 bool EraseSector(int Sect);
 
 //Erase All Sectors sets all bits in simlates memory to value 1
@@ -27,7 +27,7 @@ bool EraseAllSectors() {
 }
 
 //Read Word: Reads a WORD (2 bytes) from specific address
-struct word ReadWord (int nAddress) {
+struct word ReadWord (long nAddress) {
 	struct word result;
 	char storage[2];
 	//checks that address is on boundary
@@ -42,7 +42,7 @@ struct word ReadWord (int nAddress) {
 		return result;
 	}
 	//calculates size of file 
-	long int size = SECTOR_SIZE * FILE_SIZE;
+	long size = SECTOR_SIZE * FILE_SIZE;
 	if ((size < nAddress) || nAddress < 0)  {
 		printf("Address out of file size bounds.");
 		return result;
@@ -57,7 +57,7 @@ struct word ReadWord (int nAddress) {
 }
 
 //Write Word: Writes a WORD (2bytes) to spefic address
-void WriteWord (int nAddress, struct word nWord) {
+void WriteWord (long nAddress, struct word nWord) {
 	
 }
 
@@ -85,6 +85,7 @@ bool EraseSector(int Sect) {
 }
 
 int main(){ 
-	EraseAllSectors();      
+	struct word test = ReadWord(0);
+	printf("%c\n", test.byte1);
 	return 0;   
 }  
