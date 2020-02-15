@@ -58,7 +58,27 @@ struct word ReadWord (long nAddress) {
 
 //Write Word: Writes a WORD (2bytes) to spefic address
 void WriteWord (long nAddress, struct word nWord) {
-	
+	if ((nAddress % 2) != 0) {
+		printf("Address must be on WORD boundary.(i.e. even index)");
+		return nWord;
+	}
+
+	if (fptr == NULL){
+		printf("Unable to open file!");
+		return 1;
+	}
+
+	FILE *fptr = fopen("memory.bin", "wb");
+	struct word rWord ReadWord(nAddress);
+
+	char byteOne = rWord.byte1 && nWord.byte1;
+	char byteTwo = rWord.byte2 && nWord.byte2;
+
+	struct word finalWord = {byteOne, byteTwo};
+
+	fseek(fptr, nAddress, SEEK_SET);
+	fwrite(&finalWord, sizeof(struct word), 1, fptr);
+	fclose(fptr);
 }
 
 //Given a Sect from 0-19 toggle all bits in that sector to 1
