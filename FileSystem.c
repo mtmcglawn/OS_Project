@@ -6,8 +6,8 @@ static int SECTOR_SIZE = 64000; //In bytes
 static int FILE_SIZE = 1280000; //In bytes
 
 struct word {
-	char byte1;
-	char byte2;
+	unsigned char byte1;
+	unsigned char byte2;
 };
 
 bool EraseAllSectors();
@@ -110,6 +110,6 @@ int main(){
 	struct word test = ReadWord(0);
 	struct word test1 = {0xAA, 0xAA};//AA=10101010
 	//WriteWord(0, test1);
-	printf("%c\n", test.byte1); 
+	printf("%X\n", test.byte1); 
 	return 0;
 }  
