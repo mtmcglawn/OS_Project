@@ -106,10 +106,14 @@ bool EraseSector(int Sect) {
 }
 
 int main(){
+	long placement = 0;
 	EraseAllSectors();
-	struct word test = ReadWord(0);
+	struct word test = ReadWord(placement);
 	struct word test1 = {0xAA, 0xAA};//AA=10101010
-	//WriteWord(0, test1);
-	printf("%X\n", test.byte1); 
+	//WriteWord(placement, test1);
+	struct word test2 = ReadWord(placement);
+	printf("%X%X\n", test.byte1, test.byte2);
+	printf("%X%X\n", test1.byte1, test1.byte2);
+	printf("%X%X\n", test2.byte1, test2.byte2);
 	return 0;
 }  
