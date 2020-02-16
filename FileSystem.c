@@ -29,7 +29,7 @@ bool EraseAllSectors() {
 //Read Word: Reads a WORD (2 bytes) from specific address
 struct word ReadWord (long nAddress) {
 	struct word result;
-	char storage[2];
+	unsigned char storage[2];
 	//checks that address is on boundary
 	if ((nAddress % 2) != 0) {
 		printf("Address must be on WORD boundary.(i.e. even index)");
@@ -71,13 +71,17 @@ bool WriteWord(long nAddress, struct word nWord){
 	FILE *fptr = fopen("memory.bin", "wb");
 	struct word rWord = ReadWord(nAddress);
 
-	char byteOne = rWord.byte1 & nWord.byte1;
-	char byteTwo = rWord.byte2 & nWord.byte2;
+	unsigned char byteOne = rWord.byte1 & nWord.byte1;
+	unsigned char byteTwo = rWord.byte2 & nWord.byte2;
+   printf("%X %X\n",byteOne, byteTwo);//THIS IS WHAT WILL GO INTO FWRITE AND IS WRONG
+ 
 
 	struct word finalWord = {byteOne, byteTwo};
-
-	fseek(fptr, nAddress, SEEK_SET);
+   //COMMENTED OUT FSEEK SINCE I WANT TO DO FIRST WORD ANYWAYS FOR TEST
+	//fseek(fptr, nAddress, SEEK_SET);
 	fwrite(&finalWord, sizeof(struct word), 1, fptr);
+   //fwrite(&finalWord.byte1, sizeof(char), 1, fptr);
+   //fwrite(&finalWord.byte2, sizeof(char), 1, fptr);
 	fclose(fptr);
 	return 1;
 }
@@ -107,9 +111,10 @@ bool EraseSector(int Sect) {
 
 int main(){
 	EraseAllSectors();
-	struct word test = ReadWord(0);
-	struct word test1 = {0xAA, 0xAA};//AA=10101010
-	//WriteWord(0, test1);
-	printf("%X\n", test.byte1); 
+	//struct word test = ReadWord(998);
+	struct word test1 = {0x66, 0xAA};//AA=10101010
+   //WriteWord(998, test1);
+	WriteWord(0, test1);
+	printf("%X %X %X\n", ReadWord(0),ReadWord(0).byte1,ReadWord(0).byte2 ); 
 	return 0;
 }  
