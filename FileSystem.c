@@ -75,8 +75,9 @@ struct word ReadWord(long nAddress){
 	//Makes sure file can be opened
 	fptr = fopen("memory.bin","rb");
 	if(fptr == NULL){
-		printf("Unable to open file.");
-		return result;
+		EraseAllSectors();
+		fclose(fptr);
+		fptr = fopen("memory.bin", "rb");
 	}
 
 	//Compares the Address to the file size
@@ -124,8 +125,9 @@ bool WriteWord(long nAddress, struct word nWord){
 	//Opening the file to manipulate
 	fptr = fopen("memory.bin", "rb+");
 	if (fptr == NULL){
-		printf("Unable to open file!");
-		return 0;
+		EraseAllSectors();
+		fclose(fptr);
+		fptr = fopen("memory.bin", "rb");
 	}
 
 	//Bitwise AND to calculate the new value
@@ -183,7 +185,7 @@ int main(){
 	unsigned char inFileB = 0xFF;//FF = 1111 1111
 
 	//ensures the file has been created
-	EraseAllSectors();//Makes file All "FF"
+	//EraseAllSectors();//Makes file All "FF"
 
 	//Gets original value to compare against
 	struct word test = ReadWord(placement);
