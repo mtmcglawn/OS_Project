@@ -17,6 +17,7 @@ Program to create and manipulate a .bin file that represents
 
 FILE *fptr;
 
+char fileName[] = "memory.bin";
 static int SECTORS = 20;
 static long int SECTOR_SIZE = 64000; //In bytes
 static long int FILE_SIZE = 1280000; //In bytes
@@ -40,7 +41,7 @@ if necessary, creates the file simulating the medium.
 bool EraseAllSectors(){
 
 	//Opens or creates file
-	fptr = fopen("memory.bin","wb+");
+	fptr = fopen(fileName,"wb+");
 
 	//Loops through all sectors and Erases them
 	for(int i = 0; i < SECTORS; i++){
@@ -73,11 +74,11 @@ struct word ReadWord(long nAddress){
 	}
 
 	//Makes sure file can be opened
-	fptr = fopen("memory.bin","rb");
+	fptr = fopen(fileName,"rb");
 	if(fptr == NULL){
 		EraseAllSectors();
 		fclose(fptr);
-		fptr = fopen("memory.bin", "rb");
+		fptr = fopen(fileName, "rb");
 	}
 
 	//Compares the Address to the file size
@@ -123,11 +124,11 @@ bool WriteWord(long nAddress, struct word nWord){
 	struct word rWord = ReadWord(nAddress);//Gets the current value
 	
 	//Opening the file to manipulate
-	fptr = fopen("memory.bin", "rb+");
+	fptr = fopen(fileName, "rb+");
 	if (fptr == NULL){
 		EraseAllSectors();
 		fclose(fptr);
-		fptr = fopen("memory.bin", "rb");
+		fptr = fopen(fileName, "rb");
 	}
 
 	//Bitwise AND to calculate the new value
@@ -157,7 +158,7 @@ bool EraseSector(int nSectorNr){
 	static struct word allOnes = {0xFF, 0xFF};//"Erased" word
 
 	//Program calls EraseAllSectors if NULL to create new file
-	fptr = fopen("memory.bin","rb+");
+	fptr = fopen(fileName,"rb+");
 	if(fptr == NULL){
 		EraseAllSectors();
 	}
