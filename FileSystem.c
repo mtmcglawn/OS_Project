@@ -69,7 +69,7 @@ struct word ReadWord(long nAddress){
 
 	//Checks that address is on WORD boundary
 	if((nAddress % 2) != 0){
-		printf("Address must be on WORD boundary.(i.e. even index)");
+		printf("Address must be on WORD boundary.(i.e. even index)\n");
 		return result;
 	}
 
@@ -83,7 +83,7 @@ struct word ReadWord(long nAddress){
 
 	//Compares the Address to the file size
 	if((FILE_SIZE < nAddress) || nAddress < 0){
-		printf("Address out of file size bounds.");
+		printf("Address out of file size bounds.\n");
 		return result;
 	}
 
@@ -117,7 +117,7 @@ bool WriteWord(long nAddress, struct word nWord){
 
 	//Checking for WORD boundary
 	if((nAddress % 2) != 0){
-		printf("Address must be on WORD boundary.(i.e. even index)");
+		printf("Address must be on WORD boundary.(i.e. even index)\n");
 		return 0;
 	}
 
